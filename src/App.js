@@ -1,10 +1,8 @@
-import './App.css';
+import "./App.css";
 
 function App() {
   return (
-    <div >
-      Welcome to the Cryptocurrency Dashboard.
-    </div>
+    <h1 className="text-3xl font-bold underline ">Hello world!</h1>
   );
 }
 
