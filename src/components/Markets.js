@@ -1,7 +1,6 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getMarketData } from "../api/coingecko";
 import greenTriangle from "../assets/up.png";
 import redTriangle from "../assets/down.png";
 import fetchCryptoData from "../store/interactions";
@@ -39,7 +38,7 @@ const Markets = () => {
     <div className="container overflow-hidden p-2">
       <h1 className=" font-medium pb-4">Cryptocurrency by Market cap</h1>
       <ul>
-        {cryptoData.map((crypto, index) => (
+        {cryptoData?.map((crypto, index) => (
           <li
             key={index}
             className=" flex items-center justify-between item-center p-2"
