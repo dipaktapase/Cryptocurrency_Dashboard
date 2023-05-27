@@ -32,6 +32,7 @@ export const getChartData = async (selectedCoin, selectedCurrency, days) => {
         {
           label: "Price",
           data: coinData?.prices.map((dataPoint) => dataPoint[1]),
+          // data: ['0', '1k', '1K', '10k', '20k', '50k'],
           fill: false,
           borderColor: "rgb(75, 192, 192)",
           tension: 0.1,

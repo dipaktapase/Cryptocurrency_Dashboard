@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { getChartData } from "../api/coingecko";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getChartData, getMarketData } from "../api/coingecko";
 import searchImg from "../assets/search.png";
 import {
   Chart as Chartjs,
   ArcElement,
   CategoryScale,
-  LiniearScale,
+  LinearScale,
   PointElement,
   LineElement,
   Title,
   Tooltip,
   Legend,
   Filler,
-  LinearScale,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 
@@ -30,25 +29,39 @@ Chartjs.register(
 );
 
 const PriceChart = () => {
-  const [selectedCurrency, setSelectedCurrency] = useState("usd");
-  const [selectedCoin, setSelectedCoin] = useState("bitcoin");
-  const [chartData, setChartData] = useState({});
-  const [days, setDays] = useState("1");
-  const [error, setError] = useState("");
-  console.log(chartData);
+  const selectedCoin = useSelector((state) => state.coinReducer.selectedCoin);
+  const selectedCurrency = useSelector(
+    (state) => state.coinReducer.selectedCurrency
+  );
+  const days = useSelector((state) => state.coinReducer.days);
+  const errorData = useSelector((state) => state.coinReducer.errorData);
+  const chartData = useSelector((state) => state.chartReducer.chartData);
+  // const cryptoData = useSelector((state) => state.chartReducer.cryptoData);
 
-  console.log(days);
+  const dispatch = useDispatch();
+
+  console.log(chartData);
 
   useEffect(() => {
     const delay = setTimeout(() => {
       const fetchData = async () => {
         try {
           const data = await getChartData(selectedCoin, selectedCurrency, days);
-          setChartData(data);
-          setError("");
+          // console.log(data);
+          // const marketData = await getMarketData();
+          // setCryptoData(marketData);
+          // dispatch({type: "SET_CRYPTO_DATA", payload: marketData})
+          dispatch({ type: "SET_CHART_DATA", payload: data });
+          await console.log("chartdata comp:", chartData);
+          // setChartData(data);
+          dispatch({ type: "SET_ERROR_DATA", payload: errorData });
+          // setError("");
         } catch (error) {
           console.error("Error fetching chart data:", error);
-          setError("Error fetching chart data. Please try again.");
+          dispatch({
+            type: "SET_ERROR_DATA",
+            payload: "Error fetching chart data. Please try again.",
+          });
         }
       };
 
@@ -59,24 +72,31 @@ const PriceChart = () => {
     return () => clearTimeout(delay);
   }, [selectedCoin, selectedCurrency, days]);
 
+  useEffect(() => {
+    console.log("chartData iis:", chartData);
+  }, [chartData]);
+
   console.log(selectedCoin, selectedCurrency, chartData, days);
 
   const handleCurrencyChange = (e) => {
-    setSelectedCurrency(e.target.value);
+    dispatch({ type: "SET_SELECTED_CURRENCY", payload: e.target.value });
   };
 
   const handleSearch = (e) => {
-    setSelectedCoin(e.target.value);
+    dispatch({ type: "SET_SELECTED_COIN", payload: e.target.value });
+  };
+
+  const handleSubmitSearch = () => {
+    dispatch({ type: "SET_SELECTED_COIN", payload: "" });
   };
 
   const handleDays = (e) => {
-    setDays(e.target.value);
+    dispatch({ type: "SET_SELECTED_DAYS", payload: e.target.value });
   };
 
   return (
     <div>
       {/* Drop down menu */}
-
 
       <div className="flex items-center p-2 ">
         <div>
@@ -99,27 +119,43 @@ const PriceChart = () => {
               id="serach"
               value={selectedCoin}
               onChange={handleSearch}
-              // onClick={handleSearch}
+              onClick={handleSubmitSearch}
               placeholder="Search by coin"
               className="ml-4 w-full"
             />
           </div>
         </div>
-        </div>
+      </div>
 
       <div className="flex items-container mt-4">
-        <label htmlFor="timeFrame" className="mr-2">
-          Time Frame:
-        </label>
-        <select id="timeFrame" onChange={handleDays}>
-          <option value="1D">1D</option>
-          <option value="7D">7D</option>
-          {/* Add more time frame options */}
-        </select>
+        {/* TimeFrame */}
+        <div className="flex items-center ml-2 gap-2 p-2  " id="timeFrame">
+          <button className="cursor-pointer" value="1D" onClick={handleDays}>
+            1D
+          </button>
+          <button className="cursor-pointer" value="7D" onClick={handleDays}>
+            1W
+          </button>
+          <button className="cursor-pointer" value="30D" onClick={handleDays}>
+            1M
+          </button>
+          <button className="cursor-pointer" value="60D" onClick={handleDays}>
+            6M
+          </button>
+          <button className="cursor-pointer" value="365D" onClick={handleDays}>
+            1Y
+          </button>
+        </div>
+
+        {/* Coin Dropdown Menu */}
+        {/* {getMarketData.data} */}
+        <div>
+          <select></select>
+        </div>
       </div>
 
       <div className="mt-4 chart-container w-">
-        {!error && Object.keys(chartData).length > 0 && (
+        {!errorData && Object.keys(chartData).length > 0 && (
           <Line
             data={chartData}
             options={{
@@ -132,7 +168,6 @@ const PriceChart = () => {
           />
         )}
       </div>
-
     </div>
   );
 };
