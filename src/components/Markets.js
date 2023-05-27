@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import greenTriangle from "../assets/up.png";
 import redTriangle from "../assets/down.png";
-import fetchCryptoData from "../store/interactions";
+import { fetchCryptoData } from "../store/interactions";
 
 const Markets = () => {
   const cryptoData = useSelector((state) => state.chartReducer.cryptoData);
@@ -13,7 +13,7 @@ const Markets = () => {
     dispatch(fetchCryptoData());
   }, []);
 
-  console.log(cryptoData);
+  // console.log(cryptoData);
 
   let priceChangeColor = (price) => {
     if (price > 0) {
@@ -34,11 +34,13 @@ const Markets = () => {
     }
   };
 
+  const slicedCoinData = cryptoData?.slice(0, 10);
+
   return (
     <div className="container overflow-hidden p-2">
       <h1 className=" font-medium pb-4">Cryptocurrency by Market cap</h1>
       <ul>
-        {cryptoData?.map((crypto, index) => (
+        {slicedCoinData?.map((crypto, index) => (
           <li
             key={index}
             className=" flex items-center justify-between item-center p-2"

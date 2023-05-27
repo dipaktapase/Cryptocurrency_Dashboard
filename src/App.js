@@ -2,6 +2,7 @@ import "./App.css";
 import PriceChart from "./components/PriceChart";
 import Navbar from "./components/Navbar";
 import Markets from "./components/Markets";
+import Portfolio from "./components/Portfolio";
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
             <li className="col-start-7 col-span-2 row-start-1 row-span-3 p-4 bg-white rounded-md"><div><Markets /></div></li>
             <li className="col-start-1 col-end-6 flex row-start-3 gap-4 ">
               <div className="w-1/2 bg-white">
-                4
+                <Portfolio />
               </div>
               <div className="w-1/2 bg-white">
                 5
