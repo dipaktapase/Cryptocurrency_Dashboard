@@ -4,22 +4,16 @@ import { useSelector, useDispatch } from "react-redux";
 import { getMarketData } from "../api/coingecko";
 import greenTriangle from "../assets/up.png";
 import redTriangle from "../assets/down.png";
+import fetchCryptoData from "../store/interactions";
 
 const Markets = () => {
-  const [cryptoData, setCryptoData] = useState([]);
+  const cryptoData = useSelector((state) => state.chartReducer.cryptoData);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchCryptoData();
+    dispatch(fetchCryptoData());
   }, []);
 
-  const fetchCryptoData = async () => {
-    try {
-      const data = await getMarketData();
-      setCryptoData(data);
-    } catch (error) {
-      throw error.message;
-    }
-  };
   console.log(cryptoData);
 
   let priceChangeColor = (price) => {
@@ -81,7 +75,6 @@ const Markets = () => {
               </p>
             </div>
           </li>
-
         ))}
       </ul>
     </div>

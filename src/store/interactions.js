@@ -1,41 +1,33 @@
-export const selectedCoin = async (coin) => {
-  return {
-    type: "SET_SELECTED_COIN",
-    payload: coin,
+import { getChartData, getMarketData } from "../api/coingecko";
+
+export const fetchCryptoData = () => {
+  return async (dispatch) => {
+    try {
+      const marketData = await getMarketData();
+      dispatch({ type: "SET_CRYPTO_DATA", payload: marketData });
+    } catch (error) {
+      console.error("Error fetching market data:", error);
+      dispatch({
+        type: "SET_ERROR_DATA",
+        payload: "Error fetching market data",
+      });
+    }
   };
 };
 
-export const selectedCurrency = async (value) => {
-  return {
-    type: "SET_SELECTED_CURRENCY",
-    payload: value,
+export const fetchChartData = () => {
+  return async (dispatch) => {
+    try {
+      const chartData = await getChartData();
+      dispatch({ type: "SET_CHART_DATA", payload: chartData });
+    } catch (error) {
+      console.error("Error fetching chart data:", error);
+      dispatch({
+        type: "SET_ERROR_DATA",
+        payload: "Error fetching chart data",
+      });
+    }
   };
 };
 
-export const selectedDays = async (value) => {
-  return {
-    type: "SET_SELECTED_DAYS",
-    payload: value,
-  };
-};
-
-export const cryptoData = async (value) => {
-  return {
-    type: "SET_CRYPTO_DATA",
-    payload: value,
-  };
-};
-
-export const chartData = (value) => {
-  return {
-    type: "SET_CHART_DATA",
-    payload: value,
-  };
-};
-
-export const errorData = async (value) => {
-  return {
-    type: "SET_ERROR_DATA",
-    payload: value,
-  };
-};
+export default fetchChartData;
