@@ -27,18 +27,40 @@ export const getChartData = async (selectedCoin, selectedCurrency, days) => {
     );
 
     const coinData = response.data;
+    let date =coinData.prices.map((data) => (data[0]))
+
+    let epochTimes = coinData.prices.map((data) => data[0])
+    console.log('epochTimes', epochTimes)
+    console.log('datet',date)
+
+    const months = ["",
+      "Jan", "Febr", "Mar", "Apr",
+      "May", "Jun", "Jul", "Aug",
+      "Sept", "Oct", "Nov", "Dec",
+    ];
+
+    const Dates = epochTimes.map((epochTime) => {
+      const date = new Date(epochTime);
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1; // Months are zero-based, so add 1
+      const day = date.getDate();
+      return `${months[month]} ${day}, ${year}`;
+    });
+
+    console.log('convertedDates', Dates)
 
     const formatChartData = {
-      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+      labels: Dates,
       datasets: [
         {
           label: "Price",
-          data: coinData?.prices.map((dataPoint) => dataPoint[1]),
+          data: coinData?.prices.map((data) => data[1]),
           // data: ['0', '1k', '1K', '10k', '20k', '50k'],
+          borderColor: '#ffa600',
+          pointRadius: 2, 
           fill: false,
-          borderColor: "rgb(75, 192, 192)",
-          backgroundColor: "rgba(255, 99, 132, 0.5)",
-          tension: 0.1,
+          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+          tension: 0.5,
         },
       ],
     };
@@ -85,3 +107,37 @@ export const getGlobalData = async () => {
     throw new Error("Failed to get global chart data from Coingecko API");
   }
 };
+
+
+// export const cryptoConverter = async (exchangeCoin, exchangeCurrecy) => {
+//   try {
+//     const response = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${exchangeCoin}&vs_currencies=${exchangeCurrecy}`)
+  
+//     const exchangeRate = response.data[exchangeCoin]['usd']
+//     console.log('exchangeasdjfdsf',exchangeRate)
+//     return exchangeRate
+//   } catch (error) {
+//     throw new Error("Failed to convert currency ");
+//   }
+// }
+
+export const exchangeRates = async () => {
+  try {
+    const response = await axios.get(`https://api.coingecko.com/api/v3/exchange_rates`)
+    const exchangeRates = response.data.rates
+    return exchangeRates
+  } catch (error) {
+    throw new Error("Failed to fetch exchange rates")
+  }
+}
+
+// export const calculatePrice = async (exchangeCoin,exchangeCurrency) => {
+//   try {
+//     const response = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${exchangeCoin}&vs_currencies=${exchangeCurrency}`)
+//     const calculatedPrice = response.data[exchangeCoin][exchangeCurrency]
+//     return calculatedPrice
+//   } catch (error) {
+//     throw new Error("Filed to calculate Price")
+//   }
+// }
+

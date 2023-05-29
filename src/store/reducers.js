@@ -1,36 +1,7 @@
-// import {
-//   FETCH_CRYPTO_DATA,
-//   FETCH_CRYPTO_FAILURE,
-// } from "../constants/actionTypes";
-
-// const initailState = {
-//   cryptoData: null,
-//   error: null,
-// };
-
-// export const cryptoReducer = (state = initailState, action) => {
-//   switch (action.type) {
-//     case 'FETCH_CRYPTO_DATA':
-//       return {
-//         ...state,
-//         cryptoData: action.payload,
-//         error: null,
-//       };
-//     case 'FETCH_CRYPTO_FAILURE':
-//       return {
-//         ...state,
-//         cryptoData: null,
-//         error: action.payload,
-//       };
-//     default:
-//       return state;
-//   }
-// };
-
 const DEFAULT_COIN_STATE = {
   selectedCoin: "bitcoin",
   selectedCurrency: "usd",
-  days: "1D",
+  days: "365D",
 };
 
 export const coinReducer = (state = DEFAULT_COIN_STATE, action) => {
@@ -60,14 +31,63 @@ export const chartReducer = (state = {}, action) => {
     case "SET_CRYPTO_DATA":
       return {
         ...state,
-        CryptoData: action.payload,
+        cryptoData: action.payload,
       };
     case "SET_CHART_DATA":
-      // console.log("Payload in SET_CHART_DATA:", action.payload);
+      console.log("Payload in SET_CHART_DATA:", action.payload);
       return {
         ...state,
         chartData: action.payload,
       };
+    case "SET_GLOBAL_DATA":
+      return {
+        ...state,
+        globalData: action.payload,
+      };
+    case "SET_ERROR_DATA":
+      // console.log("Payload in SET_CHART_DATA:", action.payload);
+      return {
+        ...state,
+        errorData: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+const DEFAULT_EXCHANGE_STATE = {
+  exchangeCoin: 'bitcoin',
+  exchangeCurrecy: 'usd',
+  exchangeAmount: 100
+}
+
+export const exchangeReducer = (state = DEFAULT_EXCHANGE_STATE, action) => {
+  switch (action.type) {
+    case "SET_EXCHANGE_DATA":
+      return {
+        ...state,
+        exchangeData: action.payload,
+      };
+    case "SET_EXCHANGE_COIN":
+      return {
+        ...state,
+        exchangeCoin: action.payload,
+      };
+    case "SET_EXCHANGE_CURRENCY":
+      return {
+        ...state,
+        exchangeCurrecy: action.payload,
+      };
+      case "SET_EXCHANGE_AMOUNT":
+        return {
+          ...state,
+          exchangeAmount: action.payload,
+        };
+        // case "SET_CALCULATED_PRICE":
+        //   return {
+        //     ...state,
+        //     calculatedPrice: action.payload,
+        //   };
     default:
       return state;
   }
