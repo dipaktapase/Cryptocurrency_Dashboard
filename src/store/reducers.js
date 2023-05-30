@@ -56,10 +56,11 @@ export const chartReducer = (state = {}, action) => {
 };
 
 const DEFAULT_EXCHANGE_STATE = {
-  exchangeCoin: 'bitcoin',
-  exchangeCurrecy: 'usd',
-  exchangeAmount: 100
-}
+  exchangeCoin: "btc",
+  exchangeCurrecy: "usd",
+  // exchangeAmount: 1,
+  calculatedPrice: 0,
+};
 
 export const exchangeReducer = (state = DEFAULT_EXCHANGE_STATE, action) => {
   switch (action.type) {
@@ -78,16 +79,11 @@ export const exchangeReducer = (state = DEFAULT_EXCHANGE_STATE, action) => {
         ...state,
         exchangeCurrecy: action.payload,
       };
-      case "SET_EXCHANGE_AMOUNT":
-        return {
-          ...state,
-          exchangeAmount: action.payload,
-        };
-        // case "SET_CALCULATED_PRICE":
-        //   return {
-        //     ...state,
-        //     calculatedPrice: action.payload,
-        //   };
+    case "SET_CALCULATED_PRICE":
+      return {
+        ...state,
+        calculatedPrice: action.payload,
+      };
     default:
       return state;
   }
