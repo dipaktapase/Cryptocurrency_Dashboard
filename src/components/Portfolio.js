@@ -1,31 +1,52 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchGobalData } from "../store/interactions";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { fetchMarketCap } from "../store/interactions";
+import { Chart as ChartJS, registerables } from "chart.js";
 import { Pie } from "react-chartjs-2";
-ChartJS.register(ArcElement, Tooltip, Legend);
+
+ChartJS.register(...registerables);
 
 const Portfolio = () => {
-  const globalData = useSelector((state) => state.chartReducer.globalData);
+  const marketCap = useSelector((state) => state.chartReducer.marketCap);
+  const totalCapValue = marketCap && marketCap.totalValue;
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchGobalData());
+    dispatch(fetchMarketCap());
   }, []);
 
-  console.log("global data", globalData);
+  const options = {
+    responsive: true,
+    aspectRatio: 3,
+    plugins: {
+      legend: {
+        display: true,
+        position: "right",
+        labels: {
+          pointStyle: "circle",
+          padding: 20,
+          pointStyleWidth: 15,
+          usePointStyle: true,
+        },
+      },
+    },
+  };
+
+  // console.log("Market cap data", marketCap, totalCapValue);
 
   return (
-    <div>
-      <div className="flex item-cente gap-10 p-2">
-        <h1 className="font-bold flex ml-4">Portfolio</h1>
-        <p className="text-grey-500">Total value ${"1000"}</p>
+    <>
+      <div className="p-2">
+        <div className="flex items-center justify-between p-4">
+          <h1 className="font-bold">Portfolio</h1>
+          <p className="font-semibold text-sm">
+            Total value : <span>${totalCapValue}</span>{" "}
+          </p>
+        </div>
+        {marketCap && <Pie data={marketCap} options={options} />}
       </div>
-
-      <div className="p-4">
-        {globalData && <Pie data={globalData} height="20%" />}
-      </div>
-    </div>
+    </>
   );
 };
 

@@ -34,7 +34,7 @@ export const chartReducer = (state = {}, action) => {
         cryptoData: action.payload,
       };
     case "SET_CHART_DATA":
-      console.log("Payload in SET_CHART_DATA:", action.payload);
+      // console.log("Payload in SET_CHART_DATA:", action.payload);
       return {
         ...state,
         chartData: action.payload,
@@ -43,6 +43,11 @@ export const chartReducer = (state = {}, action) => {
       return {
         ...state,
         globalData: action.payload,
+      };
+    case "SET_MARKET_CAP":
+      return {
+        ...state,
+        marketCap: action.payload,
       };
     case "SET_ERROR_DATA":
       // console.log("Payload in SET_CHART_DATA:", action.payload);
