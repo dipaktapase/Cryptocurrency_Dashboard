@@ -13,7 +13,7 @@ const Markets = () => {
     dispatch(fetchCryptoData());
   }, []);
 
-  // console.log(cryptoData);
+  console.log(cryptoData);
 
   let priceChangeColor = (price) => {
     if (price > 0) {
@@ -48,7 +48,7 @@ const Markets = () => {
             <div>
               <h3 className="font-bold">{crypto.name}</h3>
               <p className="text-xs text-gray-500 ">
-                Mkt.Cap ${crypto.market_data.current_price.usd.toLocaleString()}
+                Mkt.Cap ${crypto.market_data.market_cap.usd.toLocaleString()}
               </p>
             </div>
 
