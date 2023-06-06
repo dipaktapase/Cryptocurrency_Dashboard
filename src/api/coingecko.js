@@ -30,50 +30,41 @@ export const getChartData = async (selectedCoin, selectedCurrency, days) => {
     // let date = coinData.prices.map((data) => data[0]);
 
     let epochTimes = coinData.prices.map((data) => data[0]);
-    // console.log('epochTimes', epochTimes)
-    // console.log('datet',date)
-
-    const months = [
-      "",
-      "Jan",
-      "Febr",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sept",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-
-    const Dates = epochTimes.map((epochTime) => {
-      const date = new Date(epochTime);
-      const year = date.getFullYear();
-      const month = date.getMonth() + 1;
-      const day = date.getDate();
-      return `${months[month]} ${day}, ${year}`;
-    });
-
-    // console.log('convertedDates', Dates)
+    // console.log("epochTimes", epochTimes);
+    // let  aa = new Date (coinData.prices[0][0]) 
+    // console.log("datet",  aa.getHours());
 
     const formatChartData = {
-      labels: Dates,
+      labels: epochTimes.map((val) => {
+        let date = new Date(val);
+        let time =
+          date.getHours() > 12
+            ? `${date.getHours() - 12}:${date.getMinutes()}PM`
+            : `${date.getHours()}:${date.getMinutes()}AM`;
+        return days === 1
+          ? time
+          : date.toLocaleDateString("default", {
+              month: "short",
+              day: "numeric", 
+              year: "numeric",
+            });
+      }),
       datasets: [
         {
-          label: "Price",
+          label: `${selectedCoin} in ${selectedCurrency}`,
           data: coinData?.prices.map((data) => data[1]),
-          // data: ['0', '1k', '1K', '10k', '20k', '50k'],
-          borderColor: "#ffa600",
+          borderColor: "rgb(255, 99, 132)",
           pointRadius: 2,
+          pointBorderColor: 'transparent',
+          spanGaps: true,
           fill: false,
           backgroundColor: "rgba(255, 99, 132, 0.5)",
-          tension: 0.5,
+          // barThickness: 2,
+          // tension: 0.5,
         },
       ],
     };
+    // console.log(formatChartData);
 
     return formatChartData;
   } catch (error) {

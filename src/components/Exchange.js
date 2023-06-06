@@ -67,17 +67,17 @@ const Exchange = () => {
   };
 
   return (
-    <div>
+    <div className="border border-red-300 rounded-lg shadow-lg">
       <h2 className="text-lg font-semibold p-2 ml-5">Exchange Coins</h2>
 
-      <div className="flex flex-row ">
+      <div className="flex flex-row p-2 ">
         <div className="p-2 items-center">
-          <div className="flex my-1 content-center items-center py-1 px-2 lg:ml-3">
+          <div className="flex my-1 content-center items-center py-1 px-2">
             <p className="text-red-500 font-semibold mr-3 text-xs">Sell</p>
             <select
               value={exchangeCoin}
               onChange={(e) => handleExchangeCoin(e.target.value)}
-              className="bg-gray-50 hover:bg-gray-100 font-semibold py-2 px-4 shadow rounded"
+              className="lg:pl-8 w-[150px] h-[2.5rem] bg-gray-50 hover:bg-gray-100 font-semibold py-2 px-4 shadow rounded "
             >
               {exchangeData &&
                 Object.keys(exchangeData).map((coin, index) => (
@@ -88,12 +88,12 @@ const Exchange = () => {
             </select>
           </div>
 
-          <div className="flex my-2 content-center items-center py-1 px-2 lg:ml-3">
+          <div className="flex my-2 content-center items-center py-1 px-2 ">
             <p className="text-green-500 font-semibold mr-3 text-xs">Buy</p>
             <select
               value={exchangeCurrecy}
               onChange={(e) => handleExchangeCurrency(e.target.value)}
-              className="bg-gray-50 hover:bg-gray-100 font-semibold py-2 px-4 shadow rounded"
+              className="lg:pl-8 w-[150px] h-[2.5rem] bg-gray-50 hover:bg-gray-100 font-semibold py-2 px-4 shadow rounded "
             >
               {exchangeData &&
                 Object.keys(exchangeData).map((currency, index) => (
@@ -105,7 +105,7 @@ const Exchange = () => {
           </div>
         </div>
 
-        <div className="lg:pl-10">
+        <div className="lg:pl-10 w-36 h-10">
           <div>
             <label className="text-xs">Enter value</label>
             <div>
@@ -117,7 +117,7 @@ const Exchange = () => {
               />
             </div>
             <p className="p-4 text-green-500">
-              {calculatedPrice !== undefined && calculatedPrice.toFixed(5)}
+              {calculatedPrice !== undefined && calculatedPrice.toFixed(2)}
             </p>
           </div>
         </div>
