@@ -1,7 +1,7 @@
 const DEFAULT_COIN_STATE = {
   selectedCoin: "bitcoin",
   selectedCurrency: "usd",
-  days: "365D",
+  days: "7",
 };
 
 export const coinReducer = (state = DEFAULT_COIN_STATE, action) => {
