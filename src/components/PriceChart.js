@@ -1,7 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getChartData, getMarketData } from "../api/coingecko";
-import searchImg from "../assets/search.png";
+import { fetchCryptoData, fetchChartData } from "../store/interactions";
+import {
+  horizontalChartOptions,
+  lineChartOptions,
+  verticalChartOptions,
+} from "./PriceChart.config";
 import {
   Chart as Chartjs,
   ArcElement,
@@ -9,18 +13,20 @@ import {
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
   Filler,
 } from "chart.js";
-import { Line } from "react-chartjs-2";
+import { Line, Bar } from "react-chartjs-2";
 
 Chartjs.register(
   ArcElement,
   CategoryScale,
   LinearScale,
   PointElement,
+  BarElement,
   LineElement,
   Title,
   Tooltip,
@@ -34,139 +40,134 @@ const PriceChart = () => {
     (state) => state.coinReducer.selectedCurrency
   );
   const days = useSelector((state) => state.coinReducer.days);
-  const errorData = useSelector((state) => state.coinReducer.errorData);
   const chartData = useSelector((state) => state.chartReducer.chartData);
-  // const cryptoData = useSelector((state) => state.chartReducer.cryptoData);
+  const cryptoData = useSelector((state) => state.chartReducer.cryptoData);
+
+  const [errorData, setErrorData] = useState("");
+  const [chartType, setChartType] = useState("line");
 
   const dispatch = useDispatch();
 
-  console.log(chartData);
-
   useEffect(() => {
     const delay = setTimeout(() => {
-      const fetchData = async () => {
-        try {
-          const data = await getChartData(selectedCoin, selectedCurrency, days);
-          // console.log(data);
-          // const marketData = await getMarketData();
-          // setCryptoData(marketData);
-          // dispatch({type: "SET_CRYPTO_DATA", payload: marketData})
-          dispatch({ type: "SET_CHART_DATA", payload: data });
-          await console.log("chartdata comp:", chartData);
-          // setChartData(data);
-          dispatch({ type: "SET_ERROR_DATA", payload: errorData });
-          // setError("");
-        } catch (error) {
-          console.error("Error fetching chart data:", error);
-          dispatch({
-            type: "SET_ERROR_DATA",
-            payload: "Error fetching chart data. Please try again.",
-          });
-        }
-      };
-
       if (selectedCoin) {
-        fetchData();
+        dispatch(fetchCryptoData());
+        dispatch(fetchChartData());
       }
     }, 1000);
     return () => clearTimeout(delay);
-  }, [selectedCoin, selectedCurrency, days]);
+  }, [selectedCoin, selectedCurrency, days, dispatch]);
 
-  useEffect(() => {
-    console.log("chartData iis:", chartData);
-  }, [chartData]);
-
-  console.log(selectedCoin, selectedCurrency, chartData, days);
-
-  const handleCurrencyChange = (e) => {
-    dispatch({ type: "SET_SELECTED_CURRENCY", payload: e.target.value });
-  };
-
-  const handleSearch = (e) => {
-    dispatch({ type: "SET_SELECTED_COIN", payload: e.target.value });
-  };
-
-  const handleSubmitSearch = () => {
-    dispatch({ type: "SET_SELECTED_COIN", payload: "" });
-  };
+  // console.log(selectedCoin, selectedCurrency, days, chartData);
 
   const handleDays = (e) => {
     dispatch({ type: "SET_SELECTED_DAYS", payload: e.target.value });
   };
 
+  const handleCryptoData = (e) => {
+    dispatch({ type: "SET_SELECTED_COIN", payload: e });
+  };
+
+  const handleChartType = (e) => {
+    setChartType(e.target.value);
+  };
+
   return (
-    <div>
-      {/* Drop down menu */}
-
-      <div className="flex items-center p-2 ">
-        <div>
+    <div className="container-fluid flex inline w-full h-96 border border-red-300 mb-2 rounded-lg shadow-lg px-4 pt-3 mt-2 gap-2">
+      <div className="flex absolute py-0 pt-28 ml-2 md:pt-20 md:ml-4 font-semibold text-md">
+        {selectedCurrency.toUpperCase()}
+      </div>
+      <div className="flex absolute lg-gap-3 items-center lg-ml-48 ml-16 gap-2 lg-left-34 left-4 md:mt-3 lg:mt-3 sm:mt-3 mt-3">
+        <button
+          className="px-3 py-1.5 border rounded-md text-xs bg-gray-50 hover:bg-gray-100 bg-opacity-30 lg:mg-auto"
+          value="1"
+          onClick={handleDays}
+        >
+          1D
+        </button>
+        <button
+          className="px-3 py-1.5 border rounded-md text-xs bg-gray-50 hover:bg-gray-100 bg-opacity-30 lg:mg-auto"
+          value="7D"
+          onClick={handleDays}
+        >
+          1W
+        </button>
+        <button
+          className="px-3 py-1.5 border rounded-md text-xs bg-gray-50 hover:bg-gray-100 bg-opacity-30 lg:mg-auto"
+          value="30D"
+          onClick={handleDays}
+        >
+          1M
+        </button>
+        <button
+          className="px-3 py-1.5 border rounded-md text-xs bg-gray-50 hover:bg-gray-100 bg-opacity-30 lg:mg-auto"
+          value="60D"
+          onClick={handleDays}
+        >
+          6M
+        </button>
+        <button
+          className="px-3 py-1.5 border rounded-md text-xs bg-gray-50 hover:bg-gray-100 bg-opacity-30 lg:mg-auto"
+          value="365D"
+          onClick={handleDays}
+        >
+          1Y
+        </button>
+        <div className="flex absolute items-center rounded-md p-2 w-24 lg:left-[22rem] lg:mt-1 md:left-[22rem] md:mt-1 sm:right-[9rem] mt-20 ml-2">
           <select
-            id="currency"
-            value={selectedCurrency}
-            onChange={handleCurrencyChange}
+            value={selectedCoin}
+            onChange={(e) => handleCryptoData(e.target.value)}
+            className="w-full relative  w-36 h-10 bg-gray-50 hover:bg-gray-100 font-semibold py-2 text-transform: capitalize outline-none shadow rounded"
+            // placeholder="Search coins..."
           >
-            <option value="usd">USD</option>
-            <option value="eur">EUR</option>
+            {cryptoData?.map((coin, index) => (
+              <option value={coin.id.toLowerCase()} key={index}>
+                {coin.name}
+              </option>
+            ))}
           </select>
-        </div>
-        <div className="flex p-2 w-full gap-2 ">
-          <div>
-            <img src={searchImg} alt="searchImg" className="h-6 w-6 ml-4" />
+
+          <div className="rounded-md bg-opacity-30 p-2 absolute lg:left-[6rem] md:left-[6rem] left-[6rem] sm:left-[8rem] w-28 ml-5">
+            <select
+              value={chartType}
+              onChange={handleChartType}
+              className="w-full w-36 h-10 bg-gray-50 hover:bg-gray-100 font-semibold py-2 shadow rounded "
+            >
+              <option value="line">Line Chart</option>
+              <option value="vertical">Vertical Bar Chart</option>
+              <option value="horizontal">Horizontal Bar Chart</option>
+            </select>
           </div>
-          <div className="">
-            <input
-              type="text"
-              id="serach"
-              value={selectedCoin}
-              onChange={handleSearch}
-              onClick={handleSubmitSearch}
-              placeholder="Search by coin"
-              className="ml-4 w-full"
+        </div>
+      </div>
+
+      <div className="h-auto sm:h-86 w-full overflow-hidden mt-24 md:mt-16 lg:mt-16">
+        {!errorData &&
+          chartData &&
+          chartType === "line" &&
+          Object.keys(chartData).length > 0 && (
+            <Line data={chartData} options={lineChartOptions} />
+          )}
+        {!errorData &&
+          chartData &&
+          chartType === "vertical" &&
+          Object.keys(chartData).length > 0 && (
+            <Bar
+              data={chartData}
+              options={verticalChartOptions}
+              height="100%"
             />
-          </div>
-        </div>
-      </div>
-
-      <div className="flex items-container mt-4">
-        {/* TimeFrame */}
-        <div className="flex items-center ml-2 gap-2 p-2  " id="timeFrame">
-          <button className="cursor-pointer" value="1D" onClick={handleDays}>
-            1D
-          </button>
-          <button className="cursor-pointer" value="7D" onClick={handleDays}>
-            1W
-          </button>
-          <button className="cursor-pointer" value="30D" onClick={handleDays}>
-            1M
-          </button>
-          <button className="cursor-pointer" value="60D" onClick={handleDays}>
-            6M
-          </button>
-          <button className="cursor-pointer" value="365D" onClick={handleDays}>
-            1Y
-          </button>
-        </div>
-
-        {/* Coin Dropdown Menu */}
-        {/* {getMarketData.data} */}
-        <div>
-          <select></select>
-        </div>
-      </div>
-
-      <div className="mt-4 chart-container w-">
-        {!errorData && Object.keys(chartData).length > 0 && (
-          <Line
-            data={chartData}
-            options={{
-              responsive: true,
-              plugins: {
-                legend: { position: "center" },
-                title: { display: true, text: `${selectedCoin}` },
-              },
-            }}
-          />
-        )}
+          )}
+        {!errorData &&
+          chartData &&
+          chartType === "horizontal" &&
+          Object.keys(chartData).length > 0 && (
+            <Bar
+              data={chartData}
+              height="100%"
+              options={horizontalChartOptions}
+            />
+          )}
       </div>
     </div>
   );
