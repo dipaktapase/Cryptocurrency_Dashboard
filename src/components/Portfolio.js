@@ -14,7 +14,7 @@ const Portfolio = () => {
 
   useEffect(() => {
     dispatch(fetchMarketCap());
-  }, []);
+  }, [dispatch]);
 
   const options = {
     responsive: true,
@@ -32,16 +32,22 @@ const Portfolio = () => {
       },
     },
   };
-
+  
   // console.log("Market cap data", marketCap, totalCapValue);
 
   return (
+
     <>
-      <div className="p-2">
+      <div className="border border-red-300 rounded-lg shadow-lg p-2">
         <div className="flex items-center justify-between p-4">
-          <h1 className="font-bold">Portfolio</h1>
+          <span className="text-lg font-semibold">
+            Portfolio
+          </span>
+          {/* <h1 className="font-bold">Portfolio</h1> */}
+          <span>
+          Total value : <span className="font-semibold">${totalCapValue}</span>{" "}
+          </span>
           <p className="font-semibold text-sm">
-            Total value : <span>${totalCapValue}</span>{" "}
           </p>
         </div>
         {marketCap && <Pie data={marketCap} options={options} />}

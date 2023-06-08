@@ -11,9 +11,9 @@ const Markets = () => {
 
   useEffect(() => {
     dispatch(fetchCryptoData());
-  }, []);
+  }, [dispatch]);
 
-  console.log(cryptoData);
+  // console.log(cryptoData);
 
   let priceChangeColor = (price) => {
     if (price > 0) {
@@ -34,19 +34,19 @@ const Markets = () => {
     }
   };
 
-  const slicedCoinData = cryptoData?.slice(0, 10);
+  const slicedCoinData = cryptoData?.slice(0, 11);
 
   return (
-    <div className="container overflow-hidden p-2">
-      <h1 className=" font-medium pb-4">Cryptocurrency by Market cap</h1>
-      <ul>
+    <div className="container-fluid w-full h-full p-2 border border-red-300 rounded-lg shadow-lg">
+      <h1 className="text-lg font-semibold pl-4">Cryptocurrency by Market cap</h1>
+      <ul className="m-2 mb-4 overflow-hidden">
         {slicedCoinData?.map((crypto, index) => (
           <li
             key={index}
             className=" flex items-center justify-between item-center p-2"
           >
             <div>
-              <h3 className="font-bold">{crypto.name}</h3>
+              <h3 className="font-semibold">{crypto.name}</h3>
               <p className="text-xs text-gray-500 ">
                 Mkt.Cap ${crypto.market_data.market_cap.usd.toLocaleString()}
               </p>
