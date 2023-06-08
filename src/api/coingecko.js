@@ -31,7 +31,6 @@ export const getChartData = async (selectedCoin, selectedCurrency, days) => {
 
     let epochTimes = coinData.prices.map((data) => data[0]);
     // console.log("epochTimes", epochTimes);
-    // let  aa = new Date (coinData.prices[0][0]) 
     // console.log("datet",  aa.getHours());
 
     const formatChartData = {

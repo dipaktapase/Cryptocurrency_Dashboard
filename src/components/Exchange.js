@@ -21,12 +21,12 @@ const Exchange = () => {
 
   const [inputValue, setInputValue] = useState("");
 
-  console.log(
-    "exchangeData",
-    exchangeData,
-    calculatedPrice,
-    exchangeCoin
-  );
+  // console.log(
+  //   "exchangeData",
+  //   exchangeData,
+  //   calculatedPrice,
+  //   exchangeCoin
+  // );
 
   const dispatch = useDispatch();
 
@@ -125,7 +125,7 @@ const Exchange = () => {
       <div className="mx-auto w-1/2 flex items-center justify-center pt-2">
         <button
           onClick={handleExchange}
-          className="border border-gray-500 p-2 mb-2 bg-red rounded-lg background-opacity-10 text-sm  font-semibold hover:bg-red-300"
+          className="border border-gray-500 p-2 mb-2 bg-red rounded-lg background-opacity-10 text-sm  font-semibold hover:bg-red-200"
         >
           Exchange
         </button>

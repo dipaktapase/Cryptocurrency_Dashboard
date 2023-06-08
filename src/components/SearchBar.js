@@ -83,7 +83,7 @@ const SearchBar = () => {
                 <li
                   key={coin.id}
                   onClick={() => handleSearch(coin.id)}
-                  className="p-2 bg-white border ml-[145px] "
+                  className="p-2 bg-white border cursor-pointer hover:bg-red-100 ml-[145px]"
                 >
                   {coin.name}
                 </li>

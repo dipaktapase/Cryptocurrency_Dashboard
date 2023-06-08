@@ -43,7 +43,7 @@ const Markets = () => {
         {slicedCoinData?.map((crypto, index) => (
           <li
             key={index}
-            className=" flex items-center justify-between item-center p-2"
+            className="flex items-center justify-between item-center p-2"
           >
             <div>
               <h3 className="font-semibold">{crypto.name}</h3>
