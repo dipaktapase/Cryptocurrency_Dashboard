@@ -37,6 +37,7 @@ export const getChartData = async (selectedCoin, selectedCurrency, days) => {
     const formatChartData = {
       labels: epochTimes.map((val) => {
         let date = new Date(val);
+        // console.log("date", epochTimes);
         let time =
           date.getHours() > 12
             ? `${date.getHours() - 12}:${date.getMinutes()}PM`

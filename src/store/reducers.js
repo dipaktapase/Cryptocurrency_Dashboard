@@ -1,7 +1,7 @@
 const DEFAULT_COIN_STATE = {
   selectedCoin: "bitcoin",
   selectedCurrency: "usd",
-  days: "7",
+  days: "365",
 };
 
 export const coinReducer = (state = DEFAULT_COIN_STATE, action) => {
@@ -50,7 +50,6 @@ export const chartReducer = (state = {}, action) => {
         marketCap: action.payload,
       };
     case "SET_ERROR_DATA":
-      // console.log("Payload in SET_CHART_DATA:", action.payload);
       return {
         ...state,
         errorData: action.payload,
