@@ -4,7 +4,7 @@
 
 ## Deployed Link
 
-https://cryptocurrency-dashboard-na31d6hmh-dipaktapase.vercel.app/
+https://cryptocurrency-dashboard-dipaktapase.vercel.app/
 
 ## Content
 
