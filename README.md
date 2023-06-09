@@ -4,7 +4,7 @@
 
 ## Deployed Link
 
-https://github.com/dipaktapase/Cryptocurrency_Dashboard/
+https://cryptocurrency-dashboard-na31d6hmh-dipaktapase.vercel.app/
 
 ## Content
 
