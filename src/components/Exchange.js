@@ -15,9 +15,6 @@ const Exchange = () => {
   const calculatedPrice = useSelector(
     (state) => state.exchangeReducer.calculatedPrice
   );
-  // const exchangeAmount = useSelector(
-  //   (state) => state.exchangeReducer.exchangeAmount
-  // );
 
   const [inputValue, setInputValue] = useState("");
 

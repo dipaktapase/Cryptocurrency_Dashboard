@@ -1,11 +1,11 @@
 import {
   getChartData,
   getMarketData,
-  getGlobalData,
   exchangeRates,
   getMarketCap,
 } from "../api/coingecko";
 
+// Load cryptocurrencies market data
 export const fetchCryptoData = () => {
   return async (dispatch) => {
     try {
@@ -21,6 +21,7 @@ export const fetchCryptoData = () => {
   };
 };
 
+// Load the chart data
 export const fetchChartData = () => {
   return async (dispatch, getState) => {
     try {
@@ -45,17 +46,7 @@ export const fetchChartData = () => {
   };
 };
 
-export const fetchGobalData = () => {
-  return async (dispatch) => {
-    try {
-      const globalData = await getGlobalData();
-      dispatch({ type: "SET_GLOBAL_DATA", payload: globalData });
-    } catch (error) {
-      console.error("Error fetching global data:", error);
-    }
-  };
-};
-
+// Load exchange data
 export const fetchExchangeData = () => {
   return async (dispatch) => {
     try {
@@ -69,6 +60,7 @@ export const fetchExchangeData = () => {
   };
 };
 
+// Load Market Capital
 export const fetchMarketCap = () => {
   return async (dispatch) => {
     try {

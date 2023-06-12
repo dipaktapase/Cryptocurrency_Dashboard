@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// Fetching the market data from coingecko api
 export const getMarketData = async () => {
   try {
     const response = await axios.get(
@@ -20,6 +21,7 @@ export const getMarketData = async () => {
   }
 };
 
+// Fetching the data for various charts
 export const getChartData = async (selectedCoin, selectedCurrency, days) => {
   try {
     const response = await axios.get(
@@ -27,8 +29,6 @@ export const getChartData = async (selectedCoin, selectedCurrency, days) => {
     );
 
     const coinData = response.data;
-    // let date = coinData.prices.map((data) => data[0]);
-
     let epochTimes = coinData.prices.map((data) => data[0]);
     // console.log("epochTimes", epochTimes);
     // console.log("datet",  aa.getHours());
@@ -72,43 +72,7 @@ export const getChartData = async (selectedCoin, selectedCurrency, days) => {
   }
 };
 
-export const getGlobalData = async () => {
-  try {
-    const response = await axios.get("https://api.coingecko.com/api/v3/global");
-
-    const data = Object.entries(response.data.data.market_cap_percentage);
-
-    data.sort((a, b) => b[1] - a[1]);
-
-    const pieData = data?.map(([currency, percentage]) => ({
-      label: currency.toUpperCase(),
-      value: percentage.toFixed(2),
-    }));
-
-    const formatChartData = {
-      labels: pieData.map((item) => item.label),
-      datasets: [
-        {
-          label: "%",
-          data: pieData.map((item) => item.value),
-          backgroundColor: [
-            "rgba(201, 77, 109)",
-            "rgba(65, 116, 201)",
-            "rgba(228, 191, 88)",
-            "rgba(60, 157, 78)",
-            "rgba(112, 49, 172)",
-            "rgba(228, 191, 88)",
-          ],
-          borderWidth: 1,
-        },
-      ],
-    };
-    return formatChartData;
-  } catch (error) {
-    throw new Error("Failed to get global chart data from Coingecko API");
-  }
-};
-
+// Fetching data for exchange conversions
 export const exchangeRates = async () => {
   try {
     const response = await axios.get(
@@ -121,6 +85,7 @@ export const exchangeRates = async () => {
   }
 };
 
+// Fetching data for portfolio pie chart
 export const getMarketCap = async () => {
   try {
     const response = await axios.get(

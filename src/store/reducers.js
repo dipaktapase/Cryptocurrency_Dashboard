@@ -1,3 +1,4 @@
+// Default state for coin reducers
 const DEFAULT_COIN_STATE = {
   selectedCoin: "bitcoin",
   selectedCurrency: "usd",
@@ -59,6 +60,7 @@ export const chartReducer = (state = {}, action) => {
   }
 };
 
+// Default state for exchange reducers
 const DEFAULT_EXCHANGE_STATE = {
   exchangeCoin: "btc",
   exchangeCurrecy: "usd",
