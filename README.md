@@ -20,12 +20,12 @@ Cryptocurrency Dashboard is a web application that allows users to view current 
 
 ## Features
 
-- User can search any Cryptocurrency.
-- User can select type of charts.
+- Users can search for any Cryptocurrency.
+- Users can select a type of chart.
 - Users can view various charts in different time frames.
 - Users can check the exchange rate of different cryptocurrencies.
-- Sidebar indicate the market cap of the cryptocurrencies in the past 24 hours.
-- Resposive and User-friendly
+- The sidebar indicates the market cap of the cryptocurrencies in the past 24 hours.
+- Responsive and User-friendly
 
 
 ## Technologies and Tools
@@ -47,7 +47,7 @@ Installation:
 
 To Start Server:
 
-`npm run dev`
+`npm run start`
 
 To Visit App:
 
