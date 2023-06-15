@@ -15,6 +15,9 @@ const Exchange = () => {
   const calculatedPrice = useSelector(
     (state) => state.exchangeReducer.calculatedPrice
   );
+  const exchangeCurrecySymbol = useSelector(
+    (state) => state.exchangeReducer.exchangeCurrecySymbol
+  );
 
   const [inputValue, setInputValue] = useState("");
 
@@ -22,7 +25,8 @@ const Exchange = () => {
   //   "exchangeData",
   //   exchangeData,
   //   calculatedPrice,
-  //   exchangeCoin
+  //   exchangeCoin,
+  //   exchangeCurrecySymbol
   // );
 
   const dispatch = useDispatch();
@@ -45,6 +49,10 @@ const Exchange = () => {
     if (value && value2 && inputValue) {
       const result = (value2 / value) * inputValue;
       dispatch({ type: "SET_CALCULATED_PRICE", payload: result });
+      dispatch({
+        type: "SET_EXCHANGE_CURRENCY_SYMBOL",
+        payload: exchangeData[exchangeCurrecy].unit,
+      });
       return result;
     } else {
       console.log("Data is not available");
@@ -102,7 +110,7 @@ const Exchange = () => {
           </div>
         </div>
 
-        <div className="lg:pl-10 w-36 h-10">
+        <div className="lg:pl-10 w-38 h-10">
           <div>
             <label className="text-xs">Enter value</label>
             <div>
@@ -114,7 +122,9 @@ const Exchange = () => {
               />
             </div>
             <p className="p-4 text-green-500">
-              {calculatedPrice !== undefined && calculatedPrice.toFixed(2)}
+              {calculatedPrice &&
+                exchangeCurrecySymbol !== undefined &&
+                `${calculatedPrice.toFixed(2)} ${exchangeCurrecySymbol}`}
             </p>
           </div>
         </div>

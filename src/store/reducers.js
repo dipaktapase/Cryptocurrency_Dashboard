@@ -90,6 +90,11 @@ export const exchangeReducer = (state = DEFAULT_EXCHANGE_STATE, action) => {
         ...state,
         calculatedPrice: action.payload,
       };
+    case "SET_EXCHANGE_CURRENCY_SYMBOL":
+      return {
+        ...state,
+        exchangeCurrecySymbol: action.payload,
+      }
     default:
       return state;
   }
