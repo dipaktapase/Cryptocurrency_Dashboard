@@ -113,11 +113,11 @@ const PriceChart = () => {
         >
           1Y
         </button>
-        <div className="flex absolute items-center rounded-md p-2 w-24 lg:left-[22rem] lg:mt-1 md:left-[22rem] md:mt-1 sm:right-[9rem] mt-20 ml-2">
+        <div className="flex absolute items-center rounded-md p-2 w-29 sm:w-44 md:w-44  sm:left-[1rem] md:left-[18rem] lg:left-[22rem]  md:mt-1 sm:right-[9rem] right-[6rem] lg:mt-1 mt-20 ml-2">
           <select
             value={selectedCoin}
             onChange={(e) => handleCryptoData(e.target.value)}
-            className="w-full relative  w-36 h-10 bg-gray-50 hover:bg-gray-100 font-semibold py-2 text-transform: capitalize outline-none shadow rounded"
+            className="w-full lg:w-auto relative bg-gray-50 hover:bg-gray-100 font-semibold py-2 text-transform: capitalize outline-none shadow rounded"
             // placeholder="Search coins..."
           >
             {cryptoData?.map((coin, index) => (
@@ -127,11 +127,11 @@ const PriceChart = () => {
             ))}
           </select>
 
-          <div className="rounded-md bg-opacity-30 p-2 absolute lg:left-[6rem] md:left-[6rem] left-[6rem] sm:left-[8rem] w-28 ml-5">
+          <div className="rounded-md bg-opacity-30 p-2 absolute lg:left-[10rem] md:left-[10rem] sm:left-[12rem] left-[7rem] md:w-32 w-28 ml-5">
             <select
               value={chartType}
               onChange={handleChartType}
-              className="w-full w-36 h-10 bg-gray-50 hover:bg-gray-100 font-semibold py-2 shadow rounded "
+              className="w-full lg:w-auto  h-10 bg-gray-50 hover:bg-gray-100 font-semibold py-2 shadow rounded "
             >
               <option value="line">Line Chart</option>
               <option value="vertical">Vertical Bar Chart</option>
