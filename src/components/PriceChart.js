@@ -117,7 +117,7 @@ const PriceChart = () => {
           <select
             value={selectedCoin}
             onChange={(e) => handleCryptoData(e.target.value)}
-            className="w-full lg:w-auto relative bg-gray-50 hover:bg-gray-100 font-semibold py-2 text-transform: capitalize outline-none shadow rounded"
+            className="w-44 lg:w-auto relative bg-gray-50 hover:bg-gray-100 font-semibold py-2 text-transform: capitalize outline-none shadow rounded"
             // placeholder="Search coins..."
           >
             {cryptoData?.map((coin, index) => (
