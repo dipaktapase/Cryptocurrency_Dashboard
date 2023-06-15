@@ -9,12 +9,14 @@ ChartJS.register(...registerables);
 const Portfolio = () => {
   const marketCap = useSelector((state) => state.chartReducer.marketCap);
   const totalCapValue = marketCap && marketCap.totalValue;
+  const selectedCurrency = useSelector((state) => state.coinReducer.selectedCurrency);
+  const currencySymbol = useSelector((state) => state.coinReducer.currencySymbol);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchMarketCap());
-  }, [dispatch]);
+    dispatch(fetchMarketCap(selectedCurrency));
+  }, [selectedCurrency, dispatch]);
 
   const options = {
     responsive: true,
@@ -45,7 +47,7 @@ const Portfolio = () => {
           </span>
           {/* <h1 className="font-bold">Portfolio</h1> */}
           <span>
-          Total value : <span className="font-semibold">${totalCapValue}</span>{" "}
+          Total value : <span className="font-semibold">{currencySymbol && currencySymbol}{totalCapValue}</span>{" "}
           </span>
           <p className="font-semibold text-sm">
           </p>

@@ -3,6 +3,7 @@ const DEFAULT_COIN_STATE = {
   selectedCoin: "bitcoin",
   selectedCurrency: "usd",
   days: "365",
+  currencySymbol: "$"
 };
 
 export const coinReducer = (state = DEFAULT_COIN_STATE, action) => {
@@ -22,6 +23,11 @@ export const coinReducer = (state = DEFAULT_COIN_STATE, action) => {
         ...state,
         days: action.payload,
       };
+    case "SET_MAIN_CURRENCY_SYMBOL":
+      return {
+        ...state,
+        currencySymbol: action.payload,
+      }
     default:
       return state;
   }
@@ -65,6 +71,7 @@ const DEFAULT_EXCHANGE_STATE = {
   exchangeCoin: "btc",
   exchangeCurrecy: "usd",
   // exchangeAmount: 1,
+  exchangeCurrecySymbol:"$",
   calculatedPrice: 0,
 };
 

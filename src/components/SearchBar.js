@@ -8,7 +8,9 @@ const SearchBar = () => {
     (state) => state.coinReducer.selectedCurrency
   );
   const cryptoData = useSelector((state) => state.chartReducer.cryptoData);
-
+  const exchangeData = useSelector(
+    (state) => state.exchangeReducer.exchangeData
+  );
   const [search, setSearch] = useState("");
   const [searchText, setSearchText] = useState("");
 
@@ -16,7 +18,11 @@ const SearchBar = () => {
 
   useEffect(() => {
     dispatch(fetchCryptoData());
-  }, [selectedCurrency, dispatch]);
+
+    // Set currency symbol
+    const symbol = exchangeData && exchangeData[selectedCurrency].unit;
+    dispatch({ type: "SET_MAIN_CURRENCY_SYMBOL", payload: symbol });
+  }, [selectedCurrency, exchangeData, dispatch]);
 
   const handleSerachChange = (e) => {
     const searchWord = e.target.value;

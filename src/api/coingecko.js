@@ -45,7 +45,7 @@ export const getChartData = async (selectedCoin, selectedCurrency, days) => {
           ? time
           : date.toLocaleDateString("default", {
               month: "short",
-              day: "numeric", 
+              day: "numeric",
               year: "numeric",
             });
       }),
@@ -55,7 +55,7 @@ export const getChartData = async (selectedCoin, selectedCurrency, days) => {
           data: coinData?.prices.map((data) => data[1]),
           borderColor: "rgb(255, 99, 132)",
           pointRadius: 2,
-          pointBorderColor: 'transparent',
+          pointBorderColor: "transparent",
           spanGaps: true,
           fill: false,
           backgroundColor: "rgba(255, 99, 132, 0.5)",
@@ -86,19 +86,30 @@ export const exchangeRates = async () => {
 };
 
 // Fetching data for portfolio pie chart
-export const getMarketCap = async () => {
+export const getMarketCap = async (selectedCurrency) => {
   try {
     const response = await axios.get(
-      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=tether%2Cethereum%2Cbitcoin&order=market_cap_desc"
+      `https://api.coingecko.com/api/v3/coins/`,
+      {
+        params: {
+          order: "market_cap_desc",
+          per_page: 3,
+          page: 1,
+          sparkline: false,
+        },
+      }
     );
+
     const marketData = response.data;
-    // console.log("coingeccoodata", marketData);
+    // console.log("coingeccoodata", marketData, selectedCurrency);
     const formatChartData = {
       labels: marketData.map((coin) => coin.name),
       datasets: [
         {
           label: "$",
-          data: marketData.map((coin) => coin.market_cap),
+          data: marketData.map(
+            (coin) => coin.market_data.market_cap[selectedCurrency]
+          ),
           backgroundColor: [
             "rgba(201, 77, 109)",
             "rgba(65, 116, 201)",
@@ -111,13 +122,11 @@ export const getMarketCap = async () => {
         },
       ],
       totalValue: marketData
-        .map((coin) => coin.market_cap)
+        .map((coin) => coin.market_data.market_cap[selectedCurrency])
         .reduce((sum, a) => sum + a, 0)
         .toFixed(0),
     };
     return formatChartData;
-
-    // return marketData
   } catch (error) {
     console.log("Market cap error: ", error);
   }

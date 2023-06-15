@@ -7,13 +7,25 @@ import { fetchCryptoData } from "../store/interactions";
 
 const Markets = () => {
   const cryptoData = useSelector((state) => state.chartReducer.cryptoData);
+  const selectedCurrency = useSelector(
+    (state) => state.coinReducer.selectedCurrency
+  );
+  const currencySymbol = useSelector(
+    (state) => state.coinReducer.currencySymbol
+  );
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchCryptoData());
   }, [dispatch]);
 
-  // console.log(cryptoData);
+  // console.log(
+  //   cryptoData,
+  //   selectedCoin,
+  //   selectedCurrency,
+  //   currencySymbol && currencySymbol
+  // );
 
   let priceChangeColor = (price) => {
     if (price > 0) {
@@ -38,7 +50,9 @@ const Markets = () => {
 
   return (
     <div className="container-fluid w-full h-full p-2 border border-red-300 rounded-lg shadow-lg">
-      <h1 className="text-lg font-semibold pl-4">Cryptocurrency by Market cap</h1>
+      <h1 className="text-lg font-semibold pl-4">
+        Cryptocurrency by Market cap
+      </h1>
       <ul className="m-2 mb-4 overflow-hidden">
         {slicedCoinData?.map((crypto, index) => (
           <li
@@ -48,7 +62,10 @@ const Markets = () => {
             <div>
               <h3 className="font-semibold">{crypto.name}</h3>
               <p className="text-xs text-gray-500 ">
-                Mkt.Cap ${crypto.market_data.market_cap.usd.toLocaleString()}
+                Mkt.Cap {currencySymbol && currencySymbol}
+                {crypto.market_data.market_cap[
+                  selectedCurrency
+                ].toLocaleString()}
               </p>
             </div>
 

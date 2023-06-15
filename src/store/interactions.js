@@ -60,11 +60,13 @@ export const fetchExchangeData = () => {
   };
 };
 
-// Load Market Capital
+// Load Market Capital for portfolio
 export const fetchMarketCap = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
-      const marketCap = await getMarketCap();
+      const state = getState();
+      const selectedCurrency = state.coinReducer.selectedCurrency;
+      const marketCap = await getMarketCap(selectedCurrency);
       dispatch({ type: "SET_MARKET_CAP", payload: marketCap });
     } catch (error) {
       console.error("Error fetching market cap", error);
