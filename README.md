@@ -2,7 +2,7 @@
 
 ### Cryptocurrency-Dashboard
 
-<img src="https://github.com/dipaktapase/project_assets/blob/master/cryptocurrency_dashboard_almabetter/Desktop%201.png?raw=true" alt="desktopImg" width="900" >
+<img src="/public/Desktop.png" alt="desktopImg" width="900">
 
 ## Deployed Link
 
