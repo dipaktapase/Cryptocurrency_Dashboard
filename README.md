@@ -2,6 +2,8 @@
 
 ### Cryptocurrency-Dashboard
 
+<img src="https://github.com/dipaktapase/project_assets/blob/master/cryptocurrency_dashboard_almabetter/Desktop%201.png?raw=true" alt="desktopImg" width="900" >
+
 ## Deployed Link
 
 https://cryptocurrency-dashboard-dipaktapase.vercel.app/
@@ -12,6 +14,7 @@ https://cryptocurrency-dashboard-dipaktapase.vercel.app/
 - [Features](#features)
 - [Technologies](#technologies-and-tools)
 - [Installation and Setup](#installation-and-setup)
+- [Conclusion](#conclusion)
 
 
 ## Introduction 
@@ -52,6 +55,10 @@ To Start Server:
 To Visit App:
 
 `localhost:3000/`
+
+## Conclusion
+
+AlmaBetter cryptocurrency dashboard project provides a powerful tool for cryptocurrency enthusiasts, traders, and investors to gain valuable insights and make informed decisions and navigate the cryptocurrency market with confidence. Throughout the development process of the cryptocurrency dashboard project, I faced some challenges like integrating charts, importing data through API, handling API limits, and implementing responsive design. However, with the help of documentation and AlmaBetter resources, I was able to overcome these problems and successfully able to deliver the program I wanted. In this project, I was able to learn a lot of different technologies and tools to implement the proper functionality. 
 
 ## Note
 

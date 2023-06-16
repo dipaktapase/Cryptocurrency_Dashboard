@@ -15,8 +15,8 @@ const Portfolio = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchMarketCap(selectedCurrency));
-  }, [selectedCurrency, dispatch]);
+    dispatch(fetchMarketCap(selectedCurrency, currencySymbol));
+  }, [selectedCurrency, currencySymbol,dispatch]);
 
   const options = {
     responsive: true,

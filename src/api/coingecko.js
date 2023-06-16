@@ -86,7 +86,7 @@ export const exchangeRates = async () => {
 };
 
 // Fetching data for portfolio pie chart
-export const getMarketCap = async (selectedCurrency) => {
+export const getMarketCap = async (selectedCurrency, currencySymbol) => {
   try {
     const response = await axios.get(
       `https://api.coingecko.com/api/v3/coins/`,
@@ -106,7 +106,7 @@ export const getMarketCap = async (selectedCurrency) => {
       labels: marketData.map((coin) => coin.name),
       datasets: [
         {
-          label: "$",
+          label: currencySymbol && currencySymbol,
           data: marketData.map(
             (coin) => coin.market_data.market_cap[selectedCurrency]
           ),

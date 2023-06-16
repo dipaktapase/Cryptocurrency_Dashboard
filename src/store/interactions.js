@@ -66,7 +66,8 @@ export const fetchMarketCap = () => {
     try {
       const state = getState();
       const selectedCurrency = state.coinReducer.selectedCurrency;
-      const marketCap = await getMarketCap(selectedCurrency);
+      const currencySymbol = state.coinReducer.currencySymbol;
+      const marketCap = await getMarketCap(selectedCurrency, currencySymbol);
       dispatch({ type: "SET_MARKET_CAP", payload: marketCap });
     } catch (error) {
       console.error("Error fetching market cap", error);
