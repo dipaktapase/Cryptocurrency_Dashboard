@@ -868,6 +868,18 @@ video {
     left: 22rem;
   }
 
+  .md\:left-\[9rem\] {
+    left: 9rem;
+  }
+
+  .md\:left-\[21rem\] {
+    left: 21rem;
+  }
+
+  .md\:left-\[20rem\] {
+    left: 20rem;
+  }
+
   .md\:col-span-3 {
     grid-column: span 3 / span 3;
   }

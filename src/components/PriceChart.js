@@ -113,7 +113,7 @@ const PriceChart = () => {
         >
           1Y
         </button>
-        <div className="flex absolute items-center rounded-md p-2  md:w-44 w-36 lg:left-[22rem] lg:mt-1 md:left-[22rem] md:mt-1 sm:right-[6rem] mt-20 ml-2">
+        <div className="flex absolute items-center rounded-md p-2  md:w-44 w-36 lg:left-[22rem] lg:mt-1 md:left-[20rem] md:mt-1 sm:right-[6rem] mt-20 ml-2">
           <select
             value={selectedCoin}
             onChange={(e) => handleCryptoData(e.target.value)}
